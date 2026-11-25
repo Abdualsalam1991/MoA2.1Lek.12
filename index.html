@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Deutsch-Übungen: Beruf & Nebensätze</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1d2733;--mu:#5b6775;--ac:#1f7a8c;--bd:#d5dbe2;--ok:#1b8a4b;--okb:#e1f5e9;--no:#c0392b;--nob:#fbe6e3;--sel:#d9eef2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181d;--card:#1d242c;--tx:#e8edf2;--mu:#9aa6b3;--ac:#5cc0d3;--bd:#34404c;--ok:#5fd08d;--okb:#17352423;--no:#ff8a7c;--nob:#3a1f1c;--sel:#203c44}}
+:root[data-theme="dark"]{--bg:#14181d;--card:#1d242c;--tx:#e8edf2;--mu:#9aa6b3;--ac:#5cc0d3;--bd:#34404c;--ok:#5fd08d;--okb:#173524;--no:#ff8a7c;--nob:#3a1f1c;--sel:#203c44}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:.5rem 0 1rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin:0 0 18px}
+h2{font-size:1.1rem;margin:0 0 .7rem;color:var(--ac)}
+.blog{background:var(--bg);border-left:4px solid var(--ac);padding:10px 14px;border-radius:6px;font-size:.95rem;margin-bottom:12px}
+.blog h3{margin:.1rem 0 .4rem;font-size:1rem}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0}
+.lab{font-weight:700;color:var(--mu);min-width:1.2em}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:4px 12px}
+button:hover:not(:disabled){border-color:var(--ac)}
+button.on{background:var(--sel);border-color:var(--ac);font-weight:600}
+button:disabled{opacity:.75;cursor:default}
+.ok{background:var(--okb)!important;border-color:var(--ok)!important}
+.bad{background:var(--nob)!important;border-color:var(--no)!important}
+input[type=text]{font:inherit;padding:4px 8px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);min-width:0;max-width:100%}
+.ex{color:var(--mu);font-style:italic}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.tools .p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.score{font-weight:700;margin-left:auto}
+.tile{padding:2px 10px}
+.ans{min-height:2.2em;border-bottom:2px dashed var(--bd);padding:2px;display:inline-flex;gap:6px;flex-wrap:wrap;min-width:140px}
+.pool{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 0 1.8em}
+.strip{font:600 1.05rem/1.6 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.12em;word-break:break-all;background:var(--bg);padding:8px;border-radius:8px}
+mark{background:#ffd966;color:#222;border-radius:3px}
+.sol{font-size:.9rem;color:var(--ok);width:100%}
+</style>
+</head>
+<body>
+<main>
+<h1>Übungen: Beruf, Bewerbung & Nebensätze</h1>
+<div id="app"></div>
+</main>
+<script>
+const $=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const norm=s=>s.toLowerCase().replace(/[.?!,]/g,'').replace(/\s+/g,' ').trim();
+const app=document.getElementById('app');
+
+function card(title,intro){const c=$('section','card');c.append($('h2','',title));if(intro)c.append(intro);app.append(c);return c}
+function tools(c,api){
+  const t=$('div','tools'),sc=$('span','score');
+  const b1=$('button','p','Prüfen'),b2=$('button','','Lösung'),b3=$('button','','Neu');
+  b1.onclick=()=>{const[r,n]=api.check();sc.textContent=r+' / '+n+' richtig'};
+  b2.onclick=()=>{api.solve();const[r,n]=api.check();sc.textContent=''};
+  b3.onclick=()=>{api.reset();sc.textContent=''};
+  t.append(b1,b2,b3,sc);c.append(t);
+}
+function mark(el,ok){el.classList.remove('ok','bad');if(ok!=null)el.classList.add(ok?'ok':'bad')}
+
+/* ---------- 9: Richtig/Falsch ---------- */
+(function(){
+  const blog=$('div','blog',`<h3>Martin am Meer – Aus den Bergen ans Meer: mein FÖJ auf Usedom</h3>
+  Salut! Ich bin Martin und schreibe hier von meinen Abenteuern an der Ostsee.<br>
+  Meine Heimatstadt Luzern ist in den Schweizer Alpen. Wir haben einen großen See, es ist wunderschön. Aber ich wollte schon immer mal am Meer wohnen. Nach der Schule war die perfekte Zeit dafür. Ich habe lange nach einer Stelle gesucht, die zu mir passt. Und dann habe ich sie gefunden: ein FÖJ (freiwilliges ökologisches Jahr) auf der Insel Usedom in Deutschland.<br>
+  Die Fahrt hat über zwölf Stunden gedauert. Ole, unser Leiter, hat mich am Bahnhof in Anklam abgeholt. „Moin Martin!“, hat er gesagt – das heißt Hallo – mehr nicht. Die Leute reden hier nicht viel. Aber Ole ist total nett.<br>
+  Ein FÖJ ist wie ein FSJ, man kümmert sich aber nicht um Menschen, es geht um die Natur. In meinem Job helfe ich im Naturpark. Im Moment zählen wir Seeadler. Das sind große Vögel, die sehr selten sind. Ole schreibt auf, ob, wann und wo wir einen Seeadler gesehen haben und ob wir Seeadler-Eier gefunden haben. Das schickt Ole dann an eine Universität. Ich bin den ganzen Tag draußen, im Wald und am Strand, es ist fantastisch!`);
+  const c=card('1  Martins Blog. Lesen Sie und kreuzen Sie an: richtig oder falsch?',blog);
+  const items=[['Martin ist Schüler.',0,1],['Früher hat Martin am Meer gewohnt.',0],['Martin ist mit dem Zug nach Usedom gefahren.',1],['Martin mag seinen Chef.',1],['In einem FÖJ betreut man Kinder.',0],['Es gibt viele Seeadler in Deutschland.',0],['Ole arbeitet an der Universität.',0],['Martin ist sehr gern auf der Insel.',1]];
+  // [text, richtig(1)/falsch(0), isExample]
+  const st=items.map(i=>i[2]?0:null);const rows=[];
+  items.forEach((it,i)=>{
+    const r=$('div','row');r.append($('span','lab','abcdefgh'[i]),$('span','',it[0]));
+    const bs=[1,0].map(v=>{const b=$('button','',v?'richtig':'falsch');b.onclick=()=>{st[i]=v;draw()};return b});
+    r.append(...bs);if(it[2])r.append($('span','ex','(Beispiel)'));c.append(r);rows.push([r,bs]);
+  });
+  function draw(clear){rows.forEach(([r,bs],i)=>{bs.forEach((b,k)=>{b.className=st[i]===(k?0:1)?'on':'';b.disabled=!!items[i][2]});if(clear)mark(r,null)})}
+  draw();
+  tools(c,{check(){let n=0,ok=0;rows.forEach(([r,bs],i)=>{if(items[i][2])return;n++;const g=st[i]===items[i][1];if(g)ok++;bs.forEach((b,k)=>{b.classList.remove('ok','bad');if(st[i]===(k?0:1))b.classList.add(g?'ok':'bad')})});return[ok,n]},
+    solve(){items.forEach((it,i)=>st[i]=it[1]);draw()},reset(){items.forEach((it,i)=>st[i]=it[2]?0:null);draw()}});
+})();
+
+/* ---------- 2: Wörter ---------- */
+(function(){
+  const c=card('2  Wie heißen die Wörter?');
+  const items=[['eugZnis','Zeugnis',1],['Lebefusaln','Lebenslauf'],['Brebuweng','Bewerbung'],['chulabSschluss','Schulabschluss'],['zungVaussetor','Voraussetzung'],['ührFereinsch','Führerschein']];
+  const ins=[];
+  items.forEach((it,i)=>{const r=$('div','row');const inp=$('input');inp.type='text';inp.autocomplete='off';inp.autocapitalize='off';inp.spellcheck=false;
+    r.append($('span','lab','abcdef'[i]),$('span','',it[0]),inp);if(it[2]){inp.value=it[1];inp.disabled=true;r.append($('span','ex','(Beispiel)'))}c.append(r);ins.push(inp)});
+  tools(c,{check(){let n=0,ok=0;ins.forEach((x,i)=>{if(items[i][2])return;n++;const g=x.value.trim().toLowerCase()===items[i][1].toLowerCase();if(g)ok++;mark(x,g)});return[ok,n]},
+    solve(){ins.forEach((x,i)=>x.value=items[i][1])},reset(){ins.forEach((x,i)=>{if(!items[i][2]){x.value='';mark(x,null)}})}});
+})();
+
+/* ---------- Auswahl-Aufgaben (3 + 6) ---------- */
+function choice(title,items,labels){
+  const c=card(title);const st=items.map(i=>i.ex?i.c:null);const rows=[];
+  items.forEach((it,i)=>{const r=$('div','row');r.append($('span','lab',labels[i]),$('span','',it.pre));
+    const bs=it.o.map((o,k)=>{const b=$('button','',o);b.onclick=()=>{st[i]=k;draw()};return b});
+    r.append(...bs);if(it.post)r.append($('span','',it.post));if(it.ex)r.append($('span','ex','(Beispiel)'));c.append(r);rows.push(bs)});
+  function draw(){rows.forEach((bs,i)=>bs.forEach((b,k)=>{b.className=st[i]===k?'on':'';b.disabled=!!items[i].ex}))}
+  draw();
+  tools(c,{check(){let n=0,ok=0;rows.forEach((bs,i)=>{if(items[i].ex)return;n++;const g=st[i]===items[i].c;if(g)ok++;bs.forEach((b,k)=>{b.classList.remove('ok','bad');if(st[i]===k)b.classList.add(g?'ok':'bad')})});return[ok,n]},
+    solve(){items.forEach((it,i)=>st[i]=it.c);draw()},reset(){items.forEach((it,i)=>st[i]=it.ex?it.c:null);draw()}});
+}
+choice('3  Was passt? Kreuzen Sie an.',[
+ {pre:'Ich will den neuen Roman von Harry Luxus',o:['überlegen','ausleihen'],c:1,post:'.',ex:1},
+ {pre:'Wir möchten uns gleich den Lebenslauf des Bewerbers',o:['ansehen','ausleihen'],c:0,post:'.'},
+ {pre:'Ich weiß echt nicht, ob dieser Job zu mir',o:['passt','ruft'],c:0,post:'.'},
+ {pre:'Für die Bewerbung musst du noch deine Zeugnisse',o:['ansehen','kopieren'],c:1,post:'.'},
+ {pre:'Ich',o:['erfahre','überlege'],c:0,post:'morgen, ob ich den Job bekomme.'},
+ {pre:'Ach komm schon! Möchtest du es dir nicht noch mal',o:['unterstützen','überlegen'],c:1,post:'?'}
+],'abcdef');
+
+/* ---------- 4: Wörter markieren ---------- */
+(function(){
+  const S='WRBETREUUNGAKLMANMELDUNGOLVERTLEITUNGÖMANENTTÄUSCHUNGKÄLKENNTNISNERAUSNAHMESAM';
+  const c=card('4  Markieren Sie und schreiben Sie die Wörter mit Artikel.');
+  const strip=$('div','strip');c.append(strip);
+  const words=['BETREUUNG','ANMELDUNG','LEITUNG','ENTTÄUSCHUNG','KENNTNIS','AUSNAHME'];
+  const draw=on=>{let h=S;if(on)words.forEach(w=>{h=h.replace(w,'\u0001'+w+'\u0002')});strip.innerHTML=h.replace(/\u0001/g,'<mark>').replace(/\u0002/g,'</mark>')};
+  draw(0);
+  const sol=['die Betreuung','die Anmeldung','die Leitung','die Enttäuschung','die Kenntnis','die Ausnahme'];
+  const ins=[];
+  sol.forEach((s,i)=>{const r=$('div','row');const inp=$('input');inp.type='text';inp.autocomplete='off';inp.autocapitalize='off';inp.spellcheck=false;
+    r.append($('span','lab',i+1+'.'),inp);if(!i){inp.value=s;inp.disabled=true;r.append($('span','ex','(Beispiel)'))}c.append(r);ins.push(inp)});
+  const found=()=>ins.slice(1).map(x=>x.value.trim().toLowerCase());
+  tools(c,{check(){let ok=0;const f=found();const used=new Set();
+      ins.slice(1).forEach((x,k)=>{const v=x.value.trim().toLowerCase();const m=sol.slice(1).findIndex((s,j)=>s.toLowerCase()===v&&!used.has(j));if(m>=0){used.add(m);ok++}mark(x,m>=0)});return[ok,5]},
+    solve(){ins.forEach((x,i)=>x.value=sol[i]);draw(1)},reset(){ins.slice(1).forEach(x=>{x.value='';mark(x,null)});draw(0)}});
+  c.insertBefore($('p','ex','Finden Sie fünf weitere Wörter (Beispiel: die Betreuung). Die Reihenfolge ist egal.'),strip);
+})();
+
+/* ---------- 5: Nebensätze ---------- */
+(function(){
+  const c=card('5  Schreiben Sie die Nebensätze.');
+  const items=[
+   {pre:'Wisst ihr,',w:'Job|ob|man|für|braucht|einen|den|Führerschein',a:['ob man für den Job einen Führerschein braucht'],ex:1},
+   {pre:'Ich weiß nicht,',w:'genug|habe|für|Arbeit|diese|ich|Geduld|ob',a:['ob ich für diese Arbeit genug Geduld habe','ob ich genug Geduld für diese Arbeit habe']},
+   {pre:'Ich würde gern wissen,',w:'die|hat|Messe|wie|geöffnet|lange',a:['wie lange die Messe geöffnet hat']},
+   {pre:'Können Sie mir sagen,',w:'ein|Reise|brauche|meine|Visum|ob|ich|für',a:['ob ich für meine Reise ein Visum brauche','ob ich ein Visum für meine Reise brauche']},
+   {pre:'Guck mal,',w:'deinen|Reisepass|ob|dabeihast|du',a:['ob du deinen Reisepass dabeihast']},
+   {pre:'Ich suche meine Gesundheitskarte. Weißt du,',w:'wo|ist|die',a:['wo die ist']}
+  ];
+  const E=[];
+  items.forEach((it,i)=>{
+    const r=$('div','');r.style.margin='12px 0';const top=$('div','row');
+    top.append($('span','lab','abcdef'[i]),$('span','',it.pre));
+    const ans=$('span','ans');top.append(ans);const mk=$('span','','');top.append(mk);if(it.ex)top.append($('span','ex','(Beispiel)'));
+    const pool=$('div','pool');r.append(top,pool);c.append(r);
+    const e={it,ans,pool,mk,sel:[],words:it.w.split('|')};E.push(e);
+    e.render=()=>{ans.innerHTML='';pool.innerHTML='';
+      e.sel.forEach(k=>{const b=$('button','tile on',e.words[k]);b.disabled=!!it.ex;b.onclick=()=>{e.sel.splice(e.sel.indexOf(k),1);e.render()};ans.append(b)});
+      e.words.forEach((w,k)=>{if(e.sel.includes(k))return;const b=$('button','tile',w);b.disabled=!!it.ex;b.onclick=()=>{e.sel.push(k);e.render()};pool.append(b)});
+      mark(ans,null);mk.textContent=''};
+    e.setSol=()=>{const s=it.a[0].split(' ');const used=new Set();e.sel=s.map(w=>{const k=e.words.findIndex((x,j)=>x.toLowerCase()===w.toLowerCase()&&!used.has(j));used.add(k);return k});e.render()};
+    if(it.ex)e.setSol();else e.render();
+  });
+  tools(c,{check(){let n=0,ok=0;E.forEach(e=>{if(e.it.ex)return;n++;const t=norm(e.sel.map(k=>e.words[k]).join(' '));const g=e.it.a.some(a=>norm(a)===t)&&e.sel.length===e.words.length;if(g)ok++;mark(e.ans,g);e.mk.textContent=g?'✓':'✗';e.mk.style.color=g?'var(--ok)':'var(--no)'});return[ok,n]},
+    solve(){E.forEach(e=>{if(!e.it.ex)e.setSol()})},reset(){E.forEach(e=>{if(!e.it.ex){e.sel=[];e.render()}})}});
+})();
+
+choice('6  Was ist richtig? Kreuzen Sie an.',[
+ {pre:'Bitte schreiben Sie mir,',o:['ob','wo','wie'],c:0,post:'meine Bewerbung angekommen ist.',ex:1},
+ {pre:'Darf ich fragen,',o:['warum','wie viel','ob'],c:1,post:'die Reise gekostet hat?'},
+ {pre:'Er weiß nicht,',o:['ob','wo','wann'],c:1,post:'die Arztpraxis ist.'},
+ {pre:'Sie möchte wissen,',o:['ob','wie lange','warum'],c:1,post:'mein FSJ dauert.'},
+ {pre:'Wir würden gern wissen,',o:['wer','ob','was'],c:2,post:'er sich zum Geburtstag wünscht.'},
+ {pre:'Ich weiß nicht,',o:['ob','wo','wer'],c:0,post:'man dort ein Praktikum machen kann.'},
+ {pre:'Bitte sag mir,',o:['wer','was','wie'],c:2,post:'lange du in Italien bleibst.'}
+],'abcdefg');
+</script>
+</body>
+</html>
